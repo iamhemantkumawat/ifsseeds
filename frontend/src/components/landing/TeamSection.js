@@ -45,9 +45,10 @@ export default function TeamSection() {
         {/* Team Grid */}
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {teamMembers.map((member, index) => (
-            <div
+            <Link
               key={index}
-              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100"
+              to={`/team/${member.id}`}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-stone-100 cursor-pointer"
             >
               {/* Image */}
               <div className="relative h-80 overflow-hidden">
@@ -82,6 +83,9 @@ export default function TeamSection() {
                 <p className="text-stone-600 leading-relaxed">
                   {member.description}
                 </p>
+                <span className="inline-block mt-4 text-green-600 font-semibold text-sm group-hover:underline">
+                  View Full Profile →
+                </span>
               </div>
 
               {/* Decorative Element */}
