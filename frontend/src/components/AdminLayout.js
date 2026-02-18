@@ -11,7 +11,7 @@ import {
   ChevronLeft,
   LogOut
 } from "lucide-react";
-import { useAuth } from "../App";
+import { useAuth } from "@/App";
 
 const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
 
