@@ -116,19 +116,19 @@ export default function AboutSection() {
         {/* Certifications */}
         <div className="mt-16">
           <h3 className="text-center text-stone-500 font-medium mb-8 uppercase tracking-wider text-sm">
-            Our Certifications & Recognition
+            Quality Assurance & Standards
           </h3>
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {CERTIFICATIONS.map((cert, index) => (
+          <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            {certifications.map((cert, index) => (
               <div 
                 key={index} 
-                className="bg-white p-4 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-stone-100"
+                className="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition-shadow border border-stone-100 text-center"
               >
-                <img
-                  src={cert.src}
-                  alt={cert.alt}
-                  className="h-24 w-auto object-contain"
-                />
+                <div className="w-16 h-16 mx-auto bg-green-100 rounded-2xl flex items-center justify-center mb-4">
+                  <cert.icon className="w-8 h-8 text-green-600" />
+                </div>
+                <h4 className="font-bold text-stone-900 mb-1">{cert.title}</h4>
+                <p className="text-sm text-stone-500">{cert.desc}</p>
               </div>
             ))}
           </div>
