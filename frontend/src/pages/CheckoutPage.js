@@ -92,6 +92,41 @@ export default function CheckoutPage() {
     toast.info("Coupon removed");
   };
 
+  const handleWhatsAppOrder = () => {
+    // Validate form
+    if (!formData.name || !formData.phone || !formData.address || !formData.city || !formData.pincode) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
+
+    // Create order message
+    const orderItems = cartItems.map(item => 
+      `• ${item.product.name} (${item.variant.weight}) x ${item.quantity} = ₹${item.variant.price * item.quantity}`
+    ).join('\n');
+
+    const message = `🌾 *New Order from IFS Seeds Website*\n\n` +
+      `*Customer Details:*\n` +
+      `Name: ${formData.name}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Email: ${formData.email || 'Not provided'}\n\n` +
+      `*Delivery Address:*\n` +
+      `${formData.address}\n` +
+      `${formData.city}, ${formData.state} - ${formData.pincode}\n\n` +
+      `*Order Items:*\n${orderItems}\n\n` +
+      `*Order Summary:*\n` +
+      `Subtotal: ₹${cartTotal}\n` +
+      `${couponDiscount > 0 ? `Discount (${appliedCoupon?.code}): -₹${couponDiscount}\n` : ''}` +
+      `Shipping: ${shipping === 0 ? 'FREE' : `₹${shipping}`}\n` +
+      `*Total: ₹${total}*\n\n` +
+      `Please confirm my order. Thank you! 🙏`;
+
+    const whatsappNumber = siteSettings.whatsapp_number?.replace(/[^0-9]/g, '') || WHATSAPP_NUMBER.replace(/[^0-9]/g, '');
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    window.open(whatsappUrl, '_blank');
+    toast.success("Redirecting to WhatsApp...");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
