@@ -1,11 +1,5 @@
 import React from "react";
-import { MapPin, Calendar, Users, Truck, Shield, Headphones } from "lucide-react";
-
-const CERTIFICATIONS = [
-  { src: "https://ifsseeds.com/wp-content/uploads/2023/05/1A-e1684861725399.png", alt: "IFS Certification 1" },
-  { src: "https://ifsseeds.com/wp-content/uploads/2023/05/2.png", alt: "IFS Certification 2" },
-  { src: "https://ifsseeds.com/wp-content/uploads/2023/05/3.png", alt: "IFS Certification 3" },
-];
+import { MapPin, Calendar, Users, Truck, Shield, Headphones, Award, CheckCircle, Leaf } from "lucide-react";
 
 export default function AboutSection() {
   const features = [
@@ -24,6 +18,12 @@ export default function AboutSection() {
       title: "Expert Support",
       description: "Agricultural experts available for guidance"
     }
+  ];
+
+  const certifications = [
+    { icon: Award, title: "Government Certified", desc: "Licensed seed dealer" },
+    { icon: Leaf, title: "Organic Options", desc: "Natural farming seeds" },
+    { icon: CheckCircle, title: "Lab Tested", desc: "98% germination rate" },
   ];
 
   return (
