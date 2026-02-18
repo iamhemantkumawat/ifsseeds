@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Award, Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const teamMembers = [
   {
+    id: "manish-kumawat",
     name: "Manish Kumawat",
     role: "Founder & CEO",
     image: "https://ifsseeds.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-22-at-10.20.34-PM.jpeg",
@@ -13,6 +15,7 @@ const teamMembers = [
     color: "amber"
   },
   {
+    id: "sundaram-verma",
     name: "Sundaram Verma",
     role: "Director",
     image: "https://ifsseeds.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-22-at-10.18.21-PM.jpeg",
