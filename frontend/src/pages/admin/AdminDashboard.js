@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 import { API } from "../../App";
-import AdminLayout from "../../components/AdminLayout";
+import AdminLayout from "@/components/AdminLayout";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState(null);

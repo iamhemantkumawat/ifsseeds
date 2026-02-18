@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { API } from "../../App";
-import AdminLayout from "../../components/AdminLayout";
+import AdminLayout from "@/components/AdminLayout";
 import { toast } from "sonner";
 
 export default function AdminCoupons() {

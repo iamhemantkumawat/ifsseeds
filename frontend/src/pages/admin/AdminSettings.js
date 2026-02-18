@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import axios from "axios";
 import { API } from "../../App";
-import AdminLayout from "../../components/AdminLayout";
+import AdminLayout from "@/components/AdminLayout";
 import { toast } from "sonner";
 
 export default function AdminSettings() {

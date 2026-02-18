@@ -3,7 +3,7 @@ import { Users, ShoppingCart, IndianRupee } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 import { API } from "../../App";
-import AdminLayout from "../../components/AdminLayout";
+import AdminLayout from "@/components/AdminLayout";
 
 export default function AdminCustomers() {
   const [customers, setCustomers] = useState([]);

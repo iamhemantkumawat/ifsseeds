@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 import { API } from "../../App";
-import AdminLayout from "../../components/AdminLayout";
+import AdminLayout from "@/components/AdminLayout";
 import { toast } from "sonner";
 
 export default function AdminInventory() {
