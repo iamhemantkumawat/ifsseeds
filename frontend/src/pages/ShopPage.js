@@ -233,10 +233,16 @@ function ProductCard({ product, onAddToCart }) {
           
           <Button
             size="sm"
-            className="bg-green-700 hover:bg-green-800 text-white rounded-full px-4"
-            onClick={() => onAddToCart(product)}
+            className="bg-green-700 hover:bg-green-800 text-white rounded-full px-4 gap-1"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onAddToCart(product);
+            }}
+            data-testid={`shop-add-to-cart-${product.id}`}
           >
             <ShoppingCart className="w-4 h-4" />
+            Add
           </Button>
         </div>
       </div>
