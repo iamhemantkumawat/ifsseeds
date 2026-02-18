@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, CheckCircle, Tag, CreditCard } from "lucide-react";
+import { ArrowLeft, CheckCircle, Tag, CreditCard, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const WHATSAPP_NUMBER = "+919950279664";
+
 export default function CheckoutPage() {
   const navigate = useNavigate();
   const { cartItems, cartTotal, cartCount, clearCart } = useCart();
@@ -28,6 +30,7 @@ export default function CheckoutPage() {
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [razorpayKey, setRazorpayKey] = useState("");
+  const [siteSettings, setSiteSettings] = useState({ razorpay_enabled: true, whatsapp_number: WHATSAPP_NUMBER });
 
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -41,7 +44,17 @@ export default function CheckoutPage() {
 
   useEffect(() => {
     fetchRazorpayConfig();
+    fetchSiteSettings();
   }, []);
+
+  const fetchSiteSettings = async () => {
+    try {
+      const res = await axios.get(`${API}/settings/site`);
+      setSiteSettings(res.data);
+    } catch (error) {
+      console.error("Failed to fetch site settings:", error);
+    }
+  };
 
   const fetchRazorpayConfig = async () => {
     try {
