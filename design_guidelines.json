@@ -1,0 +1,156 @@
+{
+  "project_name": "IFS Seeds E-commerce",
+  "theme_strategy": {
+    "mode": "light",
+    "archetype": "Organic & Earthy",
+    "emotional_goal": "Trust, Growth, Harvest, Innovation",
+    "description": "A grounded, agricultural aesthetic that balances the raw nature of farming with the precision of modern seed technology. The design should feel 'sunny' and 'abundant'."
+  },
+  "typography": {
+    "font_family_headings": "Outfit, sans-serif",
+    "font_family_body": "DM Sans, sans-serif",
+    "font_family_accent": "Syne, sans-serif",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-bold tracking-tight leading-none",
+      "h2": "text-4xl md:text-5xl font-semibold tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body": "text-base md:text-lg leading-relaxed",
+      "caption": "text-sm font-medium tracking-wide uppercase text-muted-foreground"
+    },
+    "instructions": "Use 'Outfit' for all major headings to give a distinct, slightly tech-forward but friendly look. Use 'DM Sans' for body copy for maximum legibility on low-end devices. Use 'Syne' sparingly for large numbers or decorative innovation quotes."
+  },
+  "colors": {
+    "primary": {
+      "name": "IFS Green",
+      "hex": "#15803d",
+      "tailwind": "bg-green-700",
+      "usage": "Primary buttons, active states, key branding elements."
+    },
+    "secondary": {
+      "name": "Sprout Lime",
+      "hex": "#ecfccb",
+      "tailwind": "bg-lime-100",
+      "usage": "Secondary buttons, highlight backgrounds, tags."
+    },
+    "accent": {
+      "name": "Harvest Gold",
+      "hex": "#f59e0b",
+      "tailwind": "bg-amber-500",
+      "usage": "Call-to-actions (Add to Cart), sale badges, notifications."
+    },
+    "background": {
+      "name": "Soil White",
+      "hex": "#fafaf9",
+      "tailwind": "bg-stone-50",
+      "usage": "Main page background. Avoid pure white #FFFFFF."
+    },
+    "surface": {
+      "name": "Card White",
+      "hex": "#ffffff",
+      "tailwind": "bg-white",
+      "usage": "Cards, modals, dropdowns."
+    },
+    "text": {
+      "primary": "#1c1917",
+      "secondary": "#57534e",
+      "muted": "#a8a29e"
+    },
+    "gradient": "bg-gradient-to-br from-green-50 via-stone-50 to-amber-50"
+  },
+  "layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "grid_system": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12",
+    "spacing": {
+      "section_padding": "py-16 md:py-24",
+      "component_gap": "gap-8"
+    },
+    "border_radius": {
+      "buttons": "rounded-full",
+      "cards": "rounded-2xl",
+      "inputs": "rounded-xl"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#15803d] text-white hover:bg-[#166534] shadow-lg hover:shadow-green-900/20 transition-all duration-300 rounded-full px-8 py-3 font-semibold",
+      "secondary": "bg-[#ecfccb] text-[#365314] hover:bg-[#d9f99d] transition-colors rounded-full px-6 py-2 font-medium",
+      "outline": "border-2 border-[#15803d] text-[#15803d] hover:bg-green-50 rounded-full px-6 py-2 font-medium"
+    },
+    "cards": {
+      "style": "bg-white border border-stone-100 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.06)] transition-all duration-300 rounded-2xl overflow-hidden",
+      "product_card": "group relative bg-white rounded-2xl border border-stone-200 overflow-hidden hover:border-green-300 transition-all"
+    },
+    "inputs": {
+      "style": "bg-white border-stone-200 focus:border-green-500 focus:ring-2 focus:ring-green-200 rounded-xl h-12 px-4"
+    }
+  },
+  "visual_enhancers": {
+    "textures": "Use subtle noise overlays (opacity 0.03) on solid backgrounds to give a 'paper' feel.",
+    "shadows": "Soft, diffused shadows. Avoid harsh black shadows. Use colored shadows (e.g., shadow-green-900/10).",
+    "glassmorphism": "Use sparingly. Only for sticky nav bars: backdrop-blur-xl bg-white/80 border-b border-stone-200/50."
+  },
+  "motion": {
+    "page_transition": "initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}",
+    "hover_lift": "hover:-translate-y-1 transition-transform duration-300 ease-out",
+    "button_press": "active:scale-95 transition-transform duration-100"
+  },
+  "image_urls": {
+    "hero": [
+      {
+        "url": "https://images.unsplash.com/photo-1761634853047-0ec499c794c4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1ODF8MHwxfHNlYXJjaHw0fHxsdXNoJTIwZ3JlZW4lMjBhZ3JpY3VsdHVyZSUyMGZpZWxkJTIwYWVyaWFsfGVufDB8fHx8MTc3MTQwMjE1OXww&ixlib=rb-4.1.0&q=85",
+        "description": "Aerial view of lush green rice terraces - Hero Background",
+        "category": "hero_bg"
+      },
+      {
+        "url": "https://images.pexels.com/photos/34182312/pexels-photo-34182312.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Drone over lush agricultural field - Innovation Section",
+        "category": "innovation"
+      }
+    ],
+    "people": [
+      {
+        "url": "https://images.pexels.com/photos/29912210/pexels-photo-29912210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Elderly Indian farmer in field - Trust/Testimonial",
+        "category": "testimonial"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1696371269777-88d1ce71642c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1OTV8MHwxfHNlYXJjaHwzfHxpbmRpYW4lMjBmYXJtZXIlMjBpbiUyMGZpZWxkfGVufDB8fHx8MTc3MTQwMjE1N3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Man in field holding crop - About Us",
+        "category": "team"
+      }
+    ],
+    "products": [
+      {
+        "url": "https://images.unsplash.com/photo-1731970820339-e725b78f55e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxoaWdoJTIwcXVhbGl0eSUyMHZlZ2V0YWJsZSUyMHNlZWRzJTIwbWFjcm98ZW58MHx8fHwxNzcxNDAyMTU4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Sunflower seeds macro",
+        "category": "product_1"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1693667660388-7cccf194fc06?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHw0fHxoaWdoJTIwcXVhbGl0eSUyMHZlZ2V0YWJsZSUyMHNlZWRzJTIwbWFjcm98ZW58MHx8fHwxNzcxNDAyMTU4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Green beans pile",
+        "category": "product_2"
+      }
+    ]
+  },
+  "accessibility": {
+    "contrast_check": "Ensure all text on green buttons is white (#FFFFFF). Text on amber buttons should be dark (#365314).",
+    "focus_states": "All interactive elements must have a visible ring-2 ring-offset-2 ring-green-600 focus state."
+  },
+  "instructions_to_main_agent": [
+    "1. THEME OVERRIDE: Update 'tailwind.config.js' to use the specific colors defined above (primary: #15803d, accent: #f59e0b). Do not use the default zinc/slate colors.",
+    "2. FONT INSTALLATION: You must import 'Outfit' and 'DM Sans' from Google Fonts in index.css.",
+    "3. MOBILE FIRST: Design the Product Card to be highly readable on mobile (large 'Add' button, clear price).",
+    "4. NO DEFAULT SHADCN LOOK: Override the default radius to 'rounded-xl' or 'rounded-2xl'. Remove the default 'border-border' from cards and use subtle shadows instead.",
+    "5. IMAGERY: Use the provided image URLs. Do not use placeholders.",
+    "6. RAZORPAY: Ensure the checkout flow UI anticipates the Razorpay modal integration.",
+    "7. ADMIN PANEL: The admin panel can use a denser layout (Archetype 2 from design system) but must share the same branding colors."
+  ],
+  "universal_guidelines": [
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Every interaction needs micro-animations - hover states, transitions.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors.",
+    "NEVER use AI assistant Emoji characters."
+  ]
+}
