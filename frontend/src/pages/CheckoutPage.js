@@ -443,26 +443,47 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full mt-6 bg-green-700 hover:bg-green-800 rounded-full h-12 text-lg gap-2"
-                    disabled={loading}
-                    data-testid="pay-now-btn"
-                  >
-                    {loading ? (
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <CreditCard className="w-5 h-5" />
-                        Pay ₹{total}
-                      </>
+                  {/* Payment Options */}
+                  <div className="space-y-3 mt-6">
+                    <p className="text-sm font-medium text-stone-700 text-center">Choose Payment Method</p>
+                    
+                    {/* Razorpay Payment */}
+                    {siteSettings.razorpay_enabled && (
+                      <Button
+                        type="submit"
+                        className="w-full bg-green-700 hover:bg-green-800 rounded-full h-12 text-base gap-2"
+                        disabled={loading}
+                        data-testid="pay-now-btn"
+                      >
+                        {loading ? (
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <CreditCard className="w-5 h-5" />
+                            Pay Online ₹{total}
+                          </>
+                        )}
+                      </Button>
                     )}
-                  </Button>
-                  
-                  <div className="flex items-center justify-center gap-2 mt-4">
-                    <img src="https://razorpay.com/build/browser/static/razorpay-logo.5cdb58df.svg" alt="Razorpay" className="h-5" />
-                    <span className="text-xs text-stone-500">Secure Payment</span>
+                    
+                    {/* WhatsApp Order */}
+                    <Button
+                      type="button"
+                      onClick={handleWhatsAppOrder}
+                      className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white rounded-full h-12 text-base gap-2"
+                      data-testid="whatsapp-order-btn"
+                    >
+                      <MessageCircle className="w-5 h-5" />
+                      Order via WhatsApp
+                    </Button>
                   </div>
+                  
+                  {siteSettings.razorpay_enabled && (
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <img src="https://razorpay.com/build/browser/static/razorpay-logo.5cdb58df.svg" alt="Razorpay" className="h-5" />
+                      <span className="text-xs text-stone-500">Secure Payment</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
