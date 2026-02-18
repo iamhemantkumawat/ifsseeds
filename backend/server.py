@@ -959,9 +959,11 @@ async def seed_initial_data(admin: dict = Depends(get_admin_user)):
 @api_router.post("/seed-initial-data")
 async def seed_public_data():
     """Public endpoint to seed initial data without authentication"""
-    existing = await db.products.count_documents({})
-    if existing > 0:
-        return {"message": "Data already seeded", "product_count": existing}
+    existing_products = await db.products.count_documents({})
+    existing_orders = await db.orders.count_documents({})
+    
+    if existing_products > 0 and existing_orders > 0:
+        return {"message": "Data already seeded", "product_count": existing_products}
     
     # Create admin user
     admin_exists = await db.users.find_one({"email": "admin@ifsseeds.com"})
@@ -977,7 +979,9 @@ async def seed_public_data():
         }
         await db.users.insert_one(admin_doc)
     
-    products_data = [
+    # Only seed products if none exist
+    if existing_products == 0:
+        products_data = [
         {
             "id": str(uuid.uuid4()),
             "name": "Chickpea Seed SR-1",
