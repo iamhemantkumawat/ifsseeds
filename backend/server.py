@@ -692,6 +692,70 @@ async def test_smtp_settings(data: dict, admin: dict = Depends(get_admin_user)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to send test email: {str(e)}")
 
+# Razorpay Settings
+@api_router.get("/admin/settings/razorpay")
+async def get_razorpay_settings(admin: dict = Depends(get_admin_user)):
+    settings = await db.settings.find_one({"type": "razorpay"}, {"_id": 0})
+    if not settings:
+        return {
+            "enabled": os.environ.get('RAZORPAY_ENABLED', 'true').lower() == 'true',
+            "key_id": os.environ.get('RAZORPAY_KEY_ID', ''),
+            "key_secret": ""
+        }
+    settings.pop("type", None)
+    return settings
+
+@api_router.put("/admin/settings/razorpay")
+async def update_razorpay_settings(settings: RazorpaySettings, admin: dict = Depends(get_admin_user)):
+    settings_doc = {
+        "type": "razorpay",
+        **settings.model_dump()
+    }
+    await db.settings.update_one(
+        {"type": "razorpay"},
+        {"$set": settings_doc},
+        upsert=True
+    )
+    return {"message": "Razorpay settings updated"}
+
+# WhatsApp Settings
+@api_router.get("/admin/settings/whatsapp")
+async def get_whatsapp_settings(admin: dict = Depends(get_admin_user)):
+    settings = await db.settings.find_one({"type": "whatsapp"}, {"_id": 0})
+    if not settings:
+        return {
+            "number": os.environ.get('WHATSAPP_NUMBER', '+919950279664'),
+            "enabled": True
+        }
+    settings.pop("type", None)
+    return settings
+
+@api_router.put("/admin/settings/whatsapp")
+async def update_whatsapp_settings(settings: WhatsAppSettings, admin: dict = Depends(get_admin_user)):
+    settings_doc = {
+        "type": "whatsapp",
+        **settings.model_dump()
+    }
+    await db.settings.update_one(
+        {"type": "whatsapp"},
+        {"$set": settings_doc},
+        upsert=True
+    )
+    return {"message": "WhatsApp settings updated"}
+
+# Site Settings (Public)
+@api_router.get("/settings/site")
+async def get_site_settings():
+    whatsapp = await db.settings.find_one({"type": "whatsapp"}, {"_id": 0})
+    razorpay_settings = await db.settings.find_one({"type": "razorpay"}, {"_id": 0})
+    
+    return {
+        "whatsapp_number": whatsapp.get("number") if whatsapp else os.environ.get('WHATSAPP_NUMBER', '+919950279664'),
+        "whatsapp_enabled": whatsapp.get("enabled", True) if whatsapp else True,
+        "instagram_url": os.environ.get('INSTAGRAM_URL', 'https://www.instagram.com/ifsseeds'),
+        "razorpay_enabled": razorpay_settings.get("enabled", True) if razorpay_settings else os.environ.get('RAZORPAY_ENABLED', 'true').lower() == 'true'
+    }
+
 # ============== CONTACT ROUTES ==============
 
 @api_router.post("/contact")
