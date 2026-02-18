@@ -161,6 +161,20 @@ class SMTPSettings(BaseModel):
     smtp_password: str
     from_email: str
 
+class RazorpaySettings(BaseModel):
+    enabled: bool
+    key_id: str
+    key_secret: str
+
+class WhatsAppSettings(BaseModel):
+    number: str
+    enabled: bool = True
+
+class SiteSettings(BaseModel):
+    whatsapp_number: str
+    instagram_url: str
+    razorpay_enabled: bool
+
 class ContactMessage(BaseModel):
     name: str
     phone: str
