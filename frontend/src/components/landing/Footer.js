@@ -1,10 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Twitter } from "lucide-react";
+import { Facebook, Instagram, MessageCircle } from "lucide-react";
 
 const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
+const WHATSAPP_NUMBER = "+919950279664";
+const INSTAGRAM_URL = "https://www.instagram.com/ifsseeds";
 
 export default function Footer() {
+  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^0-9]/g, '')}?text=Hi! I'm interested in IFS Seeds products.`;
+  
   return (
     <footer className="bg-stone-900 text-white" data-testid="footer">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -26,11 +30,11 @@ export default function Footer() {
               <a href="#" className="w-10 h-10 bg-stone-800 hover:bg-green-600 rounded-xl flex items-center justify-center transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-stone-800 hover:bg-green-600 rounded-xl flex items-center justify-center transition-colors">
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-stone-800 hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 rounded-xl flex items-center justify-center transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 bg-stone-800 hover:bg-green-600 rounded-xl flex items-center justify-center transition-colors">
-                <Twitter className="w-5 h-5" />
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-stone-800 hover:bg-green-500 rounded-xl flex items-center justify-center transition-colors">
+                <MessageCircle className="w-5 h-5" />
               </a>
             </div>
           </div>
@@ -46,14 +50,38 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Seeds */}
+          {/* Seeds & Contact */}
           <div>
-            <h4 className="font-semibold text-white mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>Our Seeds</h4>
+            <h4 className="font-semibold text-white mb-4" style={{ fontFamily: 'Outfit, sans-serif' }}>Contact Us</h4>
+            <ul className="space-y-3">
+              <li>
+                <a 
+                  href={whatsappLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-stone-400 hover:text-green-400 transition-colors text-sm"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  WhatsApp: {WHATSAPP_NUMBER}
+                </a>
+              </li>
+              <li>
+                <a 
+                  href={INSTAGRAM_URL} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-stone-400 hover:text-green-400 transition-colors text-sm"
+                >
+                  <Instagram className="w-4 h-4" />
+                  @ifsseeds
+                </a>
+              </li>
+            </ul>
+            <h4 className="font-semibold text-white mb-4 mt-6" style={{ fontFamily: 'Outfit, sans-serif' }}>Our Seeds</h4>
             <ul className="space-y-3">
               <li><Link to="/shop" className="text-stone-400 hover:text-green-400 transition-colors text-sm">Chickpea Seeds</Link></li>
               <li><Link to="/shop" className="text-stone-400 hover:text-green-400 transition-colors text-sm">Mustard Seeds</Link></li>
               <li><Link to="/shop" className="text-stone-400 hover:text-green-400 transition-colors text-sm">Cluster Bean Seeds</Link></li>
-              <li><Link to="/shop" className="text-stone-400 hover:text-green-400 transition-colors text-sm">More Varieties</Link></li>
             </ul>
           </div>
         </div>
