@@ -92,7 +92,7 @@ export default function TeamSection() {
               <div className={`absolute top-0 left-0 w-1 h-full ${
                 member.color === "amber" ? "bg-amber-500" : "bg-blue-500"
               }`} />
-            </div>
+            </Link>
           ))}
         </div>
 
