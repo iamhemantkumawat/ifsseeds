@@ -2,13 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Award, Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 const teamMembers = [
   {
     id: "manish-kumawat",
     name: "Manish Kumawat",
     role: "Founder & CEO",
-    image: "https://ifsseeds.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-22-at-10.20.34-PM.jpeg",
+    image: SITE_ASSETS.teamManish,
     achievement: "World Record Holder",
     achievementIcon: Trophy,
     description: "Visionary leader driving agricultural innovation and empowering farmers across India with premium quality seeds.",
@@ -18,7 +19,7 @@ const teamMembers = [
     id: "sundaram-verma",
     name: "Sundaram Verma",
     role: "Director",
-    image: "https://ifsseeds.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-22-at-10.18.21-PM.jpeg",
+    image: SITE_ASSETS.teamSundaram,
     achievement: "President Award Winner",
     achievementIcon: Award,
     description: "Recognized nationally for outstanding contribution to Indian agriculture and farmer welfare.",
@@ -53,7 +54,7 @@ export default function TeamSection() {
               {/* Image */}
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src={member.image}
+                  src={toAssetUrl(member.image)}
                   alt={member.name}
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                 />

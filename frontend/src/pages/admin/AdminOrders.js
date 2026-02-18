@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Package, Truck, CheckCircle, Clock, XCircle, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -41,6 +42,12 @@ export default function AdminOrders() {
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState("all");
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [shippingDialogOpen, setShippingDialogOpen] = useState(false);
+  const [shippingOrder, setShippingOrder] = useState(null);
+  const [shippingData, setShippingData] = useState({
+    courier_name: "",
+    tracking_id: ""
+  });
 
   useEffect(() => {
     fetchOrders();
@@ -63,21 +70,52 @@ export default function AdminOrders() {
     }
   };
 
-  const updateOrderStatus = async (orderId, newStatus) => {
+  const updateOrderStatus = async (orderId, newStatus, extraData = {}) => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(`${API}/admin/orders/${orderId}/status`, 
-        { status: newStatus },
+        { status: newStatus, ...extraData },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       toast.success(`Order status updated to ${newStatus}`);
       fetchOrders();
       if (selectedOrder?.id === orderId) {
-        setSelectedOrder(prev => ({ ...prev, order_status: newStatus }));
+        setSelectedOrder(prev => ({ ...prev, order_status: newStatus, ...extraData }));
       }
     } catch (error) {
-      toast.error("Failed to update order status");
+      toast.error(error.response?.data?.detail || "Failed to update order status");
     }
+  };
+
+  const handleStatusSelection = (order, newStatus) => {
+    if (newStatus === "shipped") {
+      setShippingOrder(order);
+      setShippingData({
+        courier_name: order.courier_name || "",
+        tracking_id: order.tracking_id || ""
+      });
+      setShippingDialogOpen(true);
+      return;
+    }
+    updateOrderStatus(order.id, newStatus);
+  };
+
+  const handleConfirmShipped = async () => {
+    if (!shippingOrder) return;
+    if (!shippingData.courier_name.trim()) {
+      toast.error("Courier name is required");
+      return;
+    }
+    if (!shippingData.tracking_id.trim()) {
+      toast.error("Tracking ID is required");
+      return;
+    }
+    await updateOrderStatus(shippingOrder.id, "shipped", {
+      courier_name: shippingData.courier_name.trim(),
+      tracking_id: shippingData.tracking_id.trim(),
+    });
+    setShippingDialogOpen(false);
+    setShippingOrder(null);
   };
 
   return (
@@ -146,7 +184,7 @@ export default function AdminOrders() {
                     <td className="px-6 py-4">
                       <Select
                         value={order.order_status}
-                        onValueChange={(value) => updateOrderStatus(order.id, value)}
+                        onValueChange={(value) => handleStatusSelection(order, value)}
                       >
                         <SelectTrigger className="w-32">
                           <Badge className={`${statusColors[order.order_status]} gap-1`}>
@@ -206,6 +244,19 @@ export default function AdminOrders() {
                 </div>
               </div>
 
+              {(selectedOrder.courier_name || selectedOrder.tracking_id) && (
+                <div>
+                  <h4 className="font-semibold text-stone-700 mb-2">Shipping Details</h4>
+                  <div className="bg-stone-50 p-4 rounded-xl text-sm">
+                    {selectedOrder.courier_name && <p><strong>Courier:</strong> {selectedOrder.courier_name}</p>}
+                    {selectedOrder.tracking_id && <p><strong>Tracking ID:</strong> {selectedOrder.tracking_id}</p>}
+                    {selectedOrder.shipped_at && (
+                      <p><strong>Shipped On:</strong> {new Date(selectedOrder.shipped_at).toLocaleString()}</p>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div>
                 <h4 className="font-semibold text-stone-700 mb-2">Items</h4>
                 <div className="space-y-2">
@@ -252,6 +303,48 @@ export default function AdminOrders() {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={shippingDialogOpen}
+        onOpenChange={(open) => {
+          setShippingDialogOpen(open);
+          if (!open) {
+            setShippingOrder(null);
+          }
+        }}
+      >
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add Shipping Details</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm font-medium text-stone-700 mb-2">Courier Name *</p>
+              <Input
+                value={shippingData.courier_name}
+                onChange={(e) => setShippingData((prev) => ({ ...prev, courier_name: e.target.value }))}
+                placeholder="e.g. Delhivery, DTDC, Blue Dart"
+              />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-stone-700 mb-2">Tracking ID *</p>
+              <Input
+                value={shippingData.tracking_id}
+                onChange={(e) => setShippingData((prev) => ({ ...prev, tracking_id: e.target.value }))}
+                placeholder="Enter shipment tracking ID"
+              />
+            </div>
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" className="flex-1" onClick={() => setShippingDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button className="flex-1 bg-purple-700 hover:bg-purple-800" onClick={handleConfirmShipped}>
+                Mark as Shipped
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </AdminLayout>

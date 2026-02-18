@@ -129,6 +129,17 @@ export default function MyOrdersPage() {
                       </p>
                     </div>
 
+                    {(order.courier_name || order.tracking_id) && (
+                      <div className="border-t border-stone-100 pt-4 mt-4">
+                        <h4 className="font-semibold text-stone-700 mb-2">Shipping Details</h4>
+                        <p className="text-sm text-stone-600">
+                          {order.courier_name && <>Courier: {order.courier_name}<br /></>}
+                          {order.tracking_id && <>Tracking ID: <span className="font-mono">{order.tracking_id}</span><br /></>}
+                          {order.shipped_at && <>Shipped On: {new Date(order.shipped_at).toLocaleString()}</>}
+                        </p>
+                      </div>
+                    )}
+
                     {order.payment_status === "paid" && (
                       <div className="mt-4 flex items-center gap-2 text-green-600 text-sm">
                         <CheckCircle className="w-4 h-4" />

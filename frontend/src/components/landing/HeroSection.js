@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Leaf, Award, TrendingUp, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 export default function HeroSection() {
   return (
@@ -82,7 +83,7 @@ export default function HeroSection() {
           <div className="relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="relative z-10">
               <img
-                src="https://ifsseeds.com/wp-content/uploads/2023/05/manish-stall10.jpg"
+                src={toAssetUrl(SITE_ASSETS.heroMain)}
                 alt="IFS Seeds Product"
                 className="w-full max-w-md mx-auto rounded-2xl shadow-2xl shadow-green-900/20 hover:-translate-y-2 transition-transform duration-500"
               />

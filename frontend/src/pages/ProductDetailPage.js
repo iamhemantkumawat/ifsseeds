@@ -9,6 +9,7 @@ import Navbar from "../components/landing/Navbar";
 import Footer from "../components/landing/Footer";
 import CartSidebar from "../components/landing/CartSidebar";
 import { toast } from "sonner";
+import { toAssetUrl } from "@/lib/assets";
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -91,7 +92,7 @@ export default function ProductDetailPage() {
             <div className="relative">
               <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-green-50 to-amber-50">
                 <img
-                  src={product.image}
+                  src={toAssetUrl(product.image)}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />

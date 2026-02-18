@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useCart, useAuth } from "../App";
 import Navbar from "../components/landing/Navbar";
 import Footer from "../components/landing/Footer";
+import { toAssetUrl } from "@/lib/assets";
 
 export default function CartPage() {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ export default function CartPage() {
                     data-testid={`cart-page-item-${item.product_id}`}
                   >
                     <img
-                      src={item.product.image}
+                      src={toAssetUrl(item.product.image)}
                       alt={item.product.name}
                       className="w-24 h-24 object-cover rounded-xl"
                     />

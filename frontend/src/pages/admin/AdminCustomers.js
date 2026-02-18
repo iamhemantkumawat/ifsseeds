@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { Users, ShoppingCart, IndianRupee } from "lucide-react";
+import { Users, ShoppingCart, IndianRupee, Pencil } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import axios from "axios";
 import { API } from "../../App";
 import AdminLayout from "@/components/AdminLayout";
+import { toast } from "sonner";
 
 export default function AdminCustomers() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editingCustomer, setEditingCustomer] = useState(null);
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
 
   useEffect(() => {
     fetchCustomers();
@@ -24,6 +42,52 @@ export default function AdminCustomers() {
       console.error("Failed to fetch customers:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const openEditDialog = (customer) => {
+    setEditingCustomer(customer);
+    setEditForm({
+      name: customer.name || "",
+      email: customer.email || "",
+      phone: customer.phone || "",
+    });
+    setEditDialogOpen(true);
+  };
+
+  const handleSaveCustomer = async () => {
+    if (!editingCustomer) return;
+    if (!editForm.name.trim()) {
+      toast.error("Name is required");
+      return;
+    }
+    if (!editForm.email.trim()) {
+      toast.error("Email is required");
+      return;
+    }
+
+    setSavingEdit(true);
+    try {
+      const token = localStorage.getItem("token");
+      await axios.put(
+        `${API}/admin/customers/${editingCustomer.id}`,
+        {
+          name: editForm.name.trim(),
+          email: editForm.email.trim(),
+          phone: editForm.phone.trim() || null,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      toast.success("User updated successfully");
+      setEditDialogOpen(false);
+      setEditingCustomer(null);
+      fetchCustomers();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to update user");
+    } finally {
+      setSavingEdit(false);
     }
   };
 
@@ -53,6 +117,7 @@ export default function AdminCustomers() {
                 <th className="text-left px-6 py-4 text-sm font-semibold text-stone-600">Joined</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-stone-600">Orders</th>
                 <th className="text-left px-6 py-4 text-sm font-semibold text-stone-600">Total Spent</th>
+                <th className="text-left px-6 py-4 text-sm font-semibold text-stone-600">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100">
@@ -83,12 +148,78 @@ export default function AdminCustomers() {
                       {customer.total_spent?.toLocaleString() || 0}
                     </span>
                   </td>
+                  <td className="px-6 py-4">
+                    <Button variant="outline" size="sm" onClick={() => openEditDialog(customer)}>
+                      <Pencil className="w-4 h-4 mr-1" />
+                      Edit
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       )}
+
+      <Dialog
+        open={editDialogOpen}
+        onOpenChange={(open) => {
+          setEditDialogOpen(open);
+          if (!open) setEditingCustomer(null);
+        }}
+      >
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit User</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="edit-name">Name *</Label>
+              <Input
+                id="edit-name"
+                value={editForm.name}
+                onChange={(e) => setEditForm((prev) => ({ ...prev, name: e.target.value }))}
+                placeholder="Enter full name"
+              />
+            </div>
+            <div>
+              <Label htmlFor="edit-email">Email *</Label>
+              <Input
+                id="edit-email"
+                type="email"
+                value={editForm.email}
+                onChange={(e) => setEditForm((prev) => ({ ...prev, email: e.target.value }))}
+                placeholder="Enter email address"
+              />
+            </div>
+            <div>
+              <Label htmlFor="edit-phone">Phone</Label>
+              <Input
+                id="edit-phone"
+                value={editForm.phone}
+                onChange={(e) => setEditForm((prev) => ({ ...prev, phone: e.target.value }))}
+                placeholder="Enter phone number"
+              />
+            </div>
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" className="flex-1" onClick={() => setEditDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button
+                className="flex-1 bg-green-700 hover:bg-green-800"
+                onClick={handleSaveCustomer}
+                disabled={savingEdit}
+              >
+                {savingEdit ? (
+                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  "Save Changes"
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </AdminLayout>
   );
 }

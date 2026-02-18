@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { X, Minus, Plus, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "../../App";
+import { toAssetUrl } from "@/lib/assets";
 
 export default function CartSidebar({ isOpen, onClose }) {
   const { cartItems, updateCartQuantity, removeFromCart, cartTotal, cartCount } = useCart();
@@ -69,7 +70,7 @@ export default function CartSidebar({ isOpen, onClose }) {
                     data-testid={`cart-item-${item.product_id}`}
                   >
                     <img
-                      src={item.product.image}
+                      src={toAssetUrl(item.product.image)}
                       alt={item.product.name}
                       className="w-20 h-20 object-cover rounded-xl"
                     />

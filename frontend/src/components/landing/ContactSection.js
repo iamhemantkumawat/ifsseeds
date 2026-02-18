@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { API } from "../../App";
 import { toast } from "sonner";
+
+const WHATSAPP_NUMBER = "+919950279664";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -16,19 +18,47 @@ export default function ContactSection() {
     message: ""
   });
   const [loading, setLoading] = useState(false);
+  const [siteSettings, setSiteSettings] = useState({
+    whatsapp_number: WHATSAPP_NUMBER
+  });
 
-  const handleSubmit = async (e) => {
+  useEffect(() => {
+    const fetchSiteSettings = async () => {
+      try {
+        const res = await axios.get(`${API}/settings/site`);
+        setSiteSettings(res.data);
+      } catch (error) {
+        console.error("Failed to fetch site settings:", error);
+      }
+    };
+    fetchSiteSettings();
+  }, []);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      await axios.post(`${API}/contact`, formData);
-      toast.success("Message sent successfully! We'll get back to you soon.");
-      setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      toast.error("Failed to send message. Please try again.");
-    } finally {
-      setLoading(false);
+
+    const message = `🌱 *IFS Seeds - New Contact Message*\n\n` +
+      `*Name:* ${formData.name}\n` +
+      `*Phone:* ${formData.phone}\n` +
+      `*Email:* ${formData.email || "Not provided"}\n` +
+      `*Subject:* ${formData.subject}\n` +
+      `*Message:*\n${formData.message}`;
+
+    const whatsappNumber = siteSettings.whatsapp_number?.replace(/[^0-9]/g, "") || WHATSAPP_NUMBER.replace(/[^0-9]/g, "");
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+    const popup = window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    if (!popup) {
+      window.location.href = whatsappUrl;
     }
+
+    // Keep storing contact inquiries in backend for admin records.
+    axios.post(`${API}/contact`, formData).catch(() => {});
+
+    toast.success("Opening WhatsApp with your message...");
+    setFormData({ name: "", phone: "", email: "", subject: "", message: "" });
+    setLoading(false);
   };
 
   return (
@@ -59,8 +89,8 @@ export default function ContactSection() {
                   <div>
                     <h4 className="font-semibold text-stone-900">Address</h4>
                     <p className="text-stone-600 mt-1">
-                      IFS Seeds (Innovative Farmers Seed)<br />
-                      Sikar, Rajasthan, India
+                      Ward no. 1, dhabai wali kothi, Danta,<br />
+                      Sikar, Rajasthan, India 332702
                     </p>
                   </div>
                 </div>
@@ -71,7 +101,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-stone-900">Phone</h4>
-                    <p className="text-stone-600 mt-1">Contact for inquiries</p>
+                    <a href="tel:+919950279664" className="text-stone-600 mt-1 hover:text-green-700 transition-colors">+91 99502 79664</a>
                   </div>
                 </div>
 

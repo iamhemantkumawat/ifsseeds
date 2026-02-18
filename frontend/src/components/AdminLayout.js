@@ -12,8 +12,7 @@ import {
   LogOut
 } from "lucide-react";
 import { useAuth } from "@/App";
-
-const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 const menuItems = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -35,7 +34,7 @@ export default function AdminLayout({ children, title }) {
       <aside className="w-64 bg-white border-r border-stone-200 fixed h-full z-10">
         <div className="p-4 border-b border-stone-200">
           <Link to="/" className="flex items-center gap-2">
-            <img src={LOGO_URL} alt="IFS Seeds" className="h-10" />
+            <img src={toAssetUrl(SITE_ASSETS.logo)} alt="IFS Seeds" className="h-10" />
             <span className="font-bold text-green-700">Admin</span>
           </Link>
         </div>

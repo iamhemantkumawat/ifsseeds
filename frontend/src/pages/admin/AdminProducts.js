@@ -23,12 +23,15 @@ import axios from "axios";
 import { API } from "../../App";
 import AdminLayout from "@/components/AdminLayout";
 import { toast } from "sonner";
+import { toAssetUrl } from "@/lib/assets";
 
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     variety: "",
@@ -76,6 +79,7 @@ export default function AdminProducts() {
       variants: [],
       is_active: true
     });
+    setSelectedImageFile(null);
     setIsDialogOpen(true);
   };
 
@@ -91,6 +95,7 @@ export default function AdminProducts() {
       variants: product.variants || [],
       is_active: product.is_active
     });
+    setSelectedImageFile(null);
     setIsDialogOpen(true);
   };
 
@@ -136,21 +141,59 @@ export default function AdminProducts() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const payload = {
+      ...formData,
+      image: formData.image.trim()
+    };
+    if (!payload.image) {
+      toast.error("Please add image URL or upload an image");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
       const headers = { Authorization: `Bearer ${token}` };
 
       if (editingProduct) {
-        await axios.put(`${API}/admin/products/${editingProduct.id}`, formData, { headers });
+        await axios.put(`${API}/admin/products/${editingProduct.id}`, payload, { headers });
         toast.success("Product updated successfully");
       } else {
-        await axios.post(`${API}/admin/products`, formData, { headers });
+        await axios.post(`${API}/admin/products`, payload, { headers });
         toast.success("Product created successfully");
       }
       setIsDialogOpen(false);
       fetchProducts();
     } catch (error) {
       toast.error(error.response?.data?.detail || "Failed to save product");
+    }
+  };
+
+  const handleImageUpload = async () => {
+    if (!selectedImageFile) {
+      toast.error("Please select an image file");
+      return;
+    }
+
+    try {
+      setUploadingImage(true);
+      const token = localStorage.getItem("token");
+      const data = new FormData();
+      data.append("image", selectedImageFile);
+
+      const res = await axios.post(`${API}/admin/products/upload-image`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
+        }
+      });
+
+      setFormData((prev) => ({ ...prev, image: res.data.url }));
+      setSelectedImageFile(null);
+      toast.success("Image uploaded successfully");
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Failed to upload image");
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -196,7 +239,7 @@ export default function AdminProducts() {
             >
               <div className="relative h-48">
                 <img
-                  src={product.image}
+                  src={toAssetUrl(product.image)}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
@@ -288,16 +331,50 @@ export default function AdminProducts() {
                 </Select>
               </div>
               <div>
-                <Label>Image URL *</Label>
+                <Label>Image URL (link option)</Label>
                 <Input
                   value={formData.image}
                   onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  required
                   className="mt-1"
                   placeholder="https://..."
                 />
               </div>
             </div>
+
+            <div className="rounded-xl border border-stone-200 p-3 bg-stone-50">
+              <Label>Upload Image (file option)</Label>
+              <div className="flex flex-col gap-2 md:flex-row md:items-center mt-1">
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setSelectedImageFile(e.target.files?.[0] || null)}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleImageUpload}
+                  disabled={!selectedImageFile || uploadingImage}
+                >
+                  {uploadingImage ? "Uploading..." : "Upload"}
+                </Button>
+              </div>
+              <p className="text-xs text-stone-500 mt-2">
+                You can use either image URL or upload image file. Upload will auto-fill image URL.
+              </p>
+            </div>
+
+            {formData.image && (
+              <div>
+                <Label>Image Preview</Label>
+                <div className="mt-2 w-full max-w-xs rounded-lg border border-stone-200 overflow-hidden">
+                  <img
+                    src={toAssetUrl(formData.image)}
+                    alt="Product preview"
+                    className="w-full h-40 object-cover"
+                  />
+                </div>
+              </div>
+            )}
 
             <div>
               <Label>Description *</Label>
@@ -394,7 +471,7 @@ export default function AdminProducts() {
               <Button
                 type="submit"
                 className="flex-1 bg-green-700 hover:bg-green-800"
-                disabled={formData.variants.length === 0}
+                disabled={formData.variants.length === 0 || uploadingImage}
                 data-testid="save-product-btn"
               >
                 {editingProduct ? "Update Product" : "Create Product"}

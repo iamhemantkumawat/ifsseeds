@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import axios from "axios";
 import { API } from "../../App";
 import { toast } from "sonner";
+import { toAssetUrl } from "@/lib/assets";
 
 export default function ProductsSection({ onAddToCart }) {
   const [products, setProducts] = useState([]);
@@ -139,7 +140,7 @@ function ProductCard({ product, onAddToCart }) {
       {/* Image Container */}
       <div className="relative overflow-hidden aspect-square bg-gradient-to-br from-green-50 to-amber-50">
         <img
-          src={product.image}
+          src={toAssetUrl(product.image)}
           alt={product.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />

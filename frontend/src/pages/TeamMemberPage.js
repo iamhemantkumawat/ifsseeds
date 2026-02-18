@@ -6,12 +6,13 @@ import { Badge } from "@/components/ui/badge";
 import Navbar from "../components/landing/Navbar";
 import Footer from "../components/landing/Footer";
 import { useCart } from "../App";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 const teamData = {
   "manish-kumawat": {
     name: "Manish Kumawat",
     role: "Founder & CEO",
-    image: "https://ifsseeds.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-22-at-10.20.34-PM.jpeg",
+    image: SITE_ASSETS.teamManish,
     achievement: "World Record Holder",
     achievementIcon: Trophy,
     color: "amber",
@@ -35,7 +36,7 @@ With a strong entrepreneurial spirit and a passion for innovation, Manish establ
   "sundaram-verma": {
     name: "Sundaram Verma",
     role: "Director",
-    image: "https://ifsseeds.com/wp-content/uploads/2023/05/WhatsApp-Image-2023-05-22-at-10.18.21-PM.jpeg",
+    image: SITE_ASSETS.teamSundaram,
     achievement: "President Award Winner",
     achievementIcon: Award,
     color: "blue",
@@ -101,7 +102,7 @@ export default function TeamMemberPage() {
             <div className="px-8 pb-8 -mt-16">
               <div className="flex flex-col md:flex-row gap-6 items-start md:items-end">
                 <img
-                  src={member.image}
+                  src={toAssetUrl(member.image)}
                   alt={member.name}
                   className="w-32 h-32 rounded-2xl border-4 border-white shadow-lg object-cover object-top"
                 />

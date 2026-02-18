@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ShoppingCart, User, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth, useCart } from "../../App";
@@ -10,19 +10,36 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 export default function Navbar({ cartCount = 0, onCartClick }) {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/shop" },
-    { name: "About", href: "/#about" },
-    { name: "Contact", href: "/#contact" },
+    { name: "About", href: "/#about", sectionId: "about" },
+    { name: "Contact", href: "/#contact", sectionId: "contact" },
   ];
+
+  const handleSectionNavigation = (e, link) => {
+    if (!link.sectionId) return;
+    e.preventDefault();
+
+    if (location.pathname === "/") {
+      const section = document.getElementById(link.sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.history.replaceState(null, "", link.href);
+      }
+    } else {
+      navigate(link.href);
+    }
+    setIsOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-stone-200/50 shadow-sm" data-testid="navbar">
@@ -31,7 +48,7 @@ export default function Navbar({ cartCount = 0, onCartClick }) {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2" data-testid="logo-link">
             <img 
-              src={LOGO_URL} 
+              src={toAssetUrl(SITE_ASSETS.logo)} 
               alt="IFS Seeds Logo" 
               className="h-12 w-auto object-contain"
             />
@@ -40,14 +57,26 @@ export default function Navbar({ cartCount = 0, onCartClick }) {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="text-stone-600 hover:text-green-700 font-medium transition-colors"
-                data-testid={`nav-link-${link.name.toLowerCase()}`}
-              >
-                {link.name}
-              </Link>
+              link.sectionId ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleSectionNavigation(e, link)}
+                  className="text-stone-600 hover:text-green-700 font-medium transition-colors"
+                  data-testid={`nav-link-${link.name.toLowerCase()}`}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="text-stone-600 hover:text-green-700 font-medium transition-colors"
+                  data-testid={`nav-link-${link.name.toLowerCase()}`}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </div>
 
@@ -117,14 +146,25 @@ export default function Navbar({ cartCount = 0, onCartClick }) {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-stone-200 animate-fade-in">
             {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className="block py-3 text-stone-600 hover:text-green-700 font-medium"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.name}
-              </Link>
+              link.sectionId ? (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="block py-3 text-stone-600 hover:text-green-700 font-medium"
+                  onClick={(e) => handleSectionNavigation(e, link)}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="block py-3 text-stone-600 hover:text-green-700 font-medium"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </div>
         )}

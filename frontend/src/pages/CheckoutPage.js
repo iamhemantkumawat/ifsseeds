@@ -9,6 +9,7 @@ import { API, useCart, useAuth } from "../App";
 import Navbar from "../components/landing/Navbar";
 import Footer from "../components/landing/Footer";
 import { toast } from "sonner";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 import {
   Select,
   SelectContent,
@@ -480,7 +481,7 @@ export default function CheckoutPage() {
                   
                   {siteSettings.razorpay_enabled && (
                     <div className="flex items-center justify-center gap-2 mt-4">
-                      <img src="https://razorpay.com/build/browser/static/razorpay-logo.5cdb58df.svg" alt="Razorpay" className="h-5" />
+                      <img src={toAssetUrl(SITE_ASSETS.razorpayLogo)} alt="Razorpay" className="h-5" />
                       <span className="text-xs text-stone-500">Secure Payment</span>
                     </div>
                   )}

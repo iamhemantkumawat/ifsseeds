@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, MessageCircle } from "lucide-react";
+import { Facebook, Instagram, MessageCircle, Phone } from "lucide-react";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
-const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
 const WHATSAPP_NUMBER = "+919950279664";
 const INSTAGRAM_URL = "https://www.instagram.com/ifsseeds";
 
@@ -17,7 +17,7 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
               <img 
-                src={LOGO_URL} 
+                src={toAssetUrl(SITE_ASSETS.logo)} 
                 alt="IFS Seeds Logo" 
                 className="h-14 w-auto object-contain bg-white rounded-lg p-1"
               />
@@ -76,6 +76,15 @@ export default function Footer() {
                   @ifsseeds
                 </a>
               </li>
+              <li>
+                <a 
+                  href="tel:+919950279664"
+                  className="flex items-center gap-2 text-stone-400 hover:text-green-400 transition-colors text-sm"
+                >
+                  <Phone className="w-4 h-4" />
+                  Phone: +91 99502 79664
+                </a>
+              </li>
             </ul>
             <h4 className="font-semibold text-white mb-4 mt-6" style={{ fontFamily: 'Outfit, sans-serif' }}>Our Seeds</h4>
             <ul className="space-y-3">
@@ -91,7 +100,7 @@ export default function Footer() {
             © {new Date().getFullYear()} IFS Seeds. All rights reserved.
           </p>
           <p className="text-stone-500 text-xs">
-            Sikar, Rajasthan, India | First Choice of Farmers
+            Ward no. 1, dhabai wali kothi, Danta, Sikar, Rajasthan, India 332702
           </p>
         </div>
       </div>

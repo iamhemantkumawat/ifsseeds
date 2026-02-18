@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "../App";
 import { toast } from "sonner";
-
-const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -52,7 +51,7 @@ export default function RegisterPage() {
 
         <div className="bg-white rounded-2xl p-8 shadow-xl border border-stone-100">
           <div className="text-center mb-8">
-            <img src={LOGO_URL} alt="IFS Seeds" className="h-16 mx-auto mb-4" />
+            <img src={toAssetUrl(SITE_ASSETS.logo)} alt="IFS Seeds" className="h-16 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-stone-900" style={{ fontFamily: 'Outfit, sans-serif' }}>
               Create Account
             </h1>

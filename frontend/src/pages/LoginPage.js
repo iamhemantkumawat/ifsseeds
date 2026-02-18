@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "../App";
 import { toast } from "sonner";
-
-const LOGO_URL = "https://019c6f48-94c7-7a6c-843e-4138d52fc944.mochausercontent.com/ifslogop.png";
+import { SITE_ASSETS, toAssetUrl } from "@/lib/assets";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -52,7 +51,7 @@ export default function LoginPage() {
 
         <div className="bg-white rounded-2xl p-8 shadow-xl border border-stone-100">
           <div className="text-center mb-8">
-            <img src={LOGO_URL} alt="IFS Seeds" className="h-16 mx-auto mb-4" />
+            <img src={toAssetUrl(SITE_ASSETS.logo)} alt="IFS Seeds" className="h-16 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-stone-900" style={{ fontFamily: 'Outfit, sans-serif' }}>
               Welcome Back
             </h1>
@@ -94,6 +93,11 @@ export default function LoginPage() {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              <div className="mt-2 text-right">
+                <Link to="/forgot-password" className="text-sm text-green-700 font-medium hover:underline">
+                  Forgot Password?
+                </Link>
+              </div>
             </div>
             <Button
               type="submit"
@@ -115,14 +119,6 @@ export default function LoginPage() {
               Register
             </Link>
           </p>
-
-          <div className="mt-6 p-4 bg-stone-50 rounded-xl">
-            <p className="text-xs text-stone-500 text-center">
-              <strong>Admin Login:</strong><br />
-              Email: admin@ifsseeds.com<br />
-              Password: admin123
-            </p>
-          </div>
         </div>
       </div>
     </div>
