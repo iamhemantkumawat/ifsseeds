@@ -1079,6 +1079,157 @@ async def seed_public_data():
     }
     await db.coupons.insert_one(coupon_data)
     
+    # Create dummy users
+    dummy_users = [
+        {
+            "id": str(uuid.uuid4()),
+            "email": "rajesh.sharma@gmail.com",
+            "name": "Rajesh Sharma",
+            "phone": "9876543210",
+            "password": hash_password("user123"),
+            "role": "customer",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "email": "priya.patel@gmail.com",
+            "name": "Priya Patel",
+            "phone": "9876543211",
+            "password": hash_password("user123"),
+            "role": "customer",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=25)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "email": "amit.verma@gmail.com",
+            "name": "Amit Verma",
+            "phone": "9876543212",
+            "password": hash_password("user123"),
+            "role": "customer",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=20)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "email": "sunita.devi@gmail.com",
+            "name": "Sunita Devi",
+            "phone": "9876543213",
+            "password": hash_password("user123"),
+            "role": "customer",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=15)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "email": "ramesh.kumar@gmail.com",
+            "name": "Ramesh Kumar",
+            "phone": "9876543214",
+            "password": hash_password("user123"),
+            "role": "customer",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=10)).isoformat()
+        }
+    ]
+    await db.users.insert_many(dummy_users)
+    
+    # Create dummy orders
+    products = await db.products.find({}, {"_id": 0}).to_list(5)
+    dummy_orders = [
+        {
+            "id": str(uuid.uuid4()),
+            "user_id": dummy_users[0]["id"],
+            "items": [
+                {"product_id": products[0]["id"], "product_name": products[0]["name"], "variant_id": products[0]["variants"][0]["id"], "variant_name": products[0]["variants"][0]["name"], "weight": "1 KG", "price": 250, "quantity": 2}
+            ],
+            "address": {"name": "Rajesh Sharma", "phone": "9876543210", "email": "rajesh.sharma@gmail.com", "address": "123, Farm House, Village Road", "city": "Jaipur", "state": "Rajasthan", "pincode": "302001"},
+            "subtotal": 500,
+            "discount": 100,
+            "shipping": 0,
+            "total": 400,
+            "coupon_code": "WELCOME20",
+            "payment_status": "paid",
+            "payment_id": "pay_dummy_001",
+            "razorpay_order_id": "order_dummy_001",
+            "order_status": "delivered",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=28)).isoformat(),
+            "updated_at": (datetime.now(timezone.utc) - timedelta(days=25)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "user_id": dummy_users[1]["id"],
+            "items": [
+                {"product_id": products[1]["id"], "product_name": products[1]["name"], "variant_id": products[1]["variants"][0]["id"], "variant_name": products[1]["variants"][0]["name"], "weight": "1 KG", "price": 799, "quantity": 1}
+            ],
+            "address": {"name": "Priya Patel", "phone": "9876543211", "email": "priya.patel@gmail.com", "address": "45, Green Valley", "city": "Ahmedabad", "state": "Gujarat", "pincode": "380001"},
+            "subtotal": 799,
+            "discount": 159,
+            "shipping": 0,
+            "total": 640,
+            "coupon_code": "WELCOME20",
+            "payment_status": "paid",
+            "payment_id": "pay_dummy_002",
+            "razorpay_order_id": "order_dummy_002",
+            "order_status": "shipped",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=5)).isoformat(),
+            "updated_at": (datetime.now(timezone.utc) - timedelta(days=3)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "user_id": dummy_users[2]["id"],
+            "items": [
+                {"product_id": products[2]["id"], "product_name": products[2]["name"], "variant_id": products[2]["variants"][0]["id"], "variant_name": products[2]["variants"][0]["name"], "weight": "2 KG", "price": 400, "quantity": 3}
+            ],
+            "address": {"name": "Amit Verma", "phone": "9876543212", "email": "amit.verma@gmail.com", "address": "78, Kisan Nagar", "city": "Sikar", "state": "Rajasthan", "pincode": "332001"},
+            "subtotal": 1200,
+            "discount": 200,
+            "shipping": 0,
+            "total": 1000,
+            "coupon_code": "WELCOME20",
+            "payment_status": "paid",
+            "payment_id": "pay_dummy_003",
+            "razorpay_order_id": "order_dummy_003",
+            "order_status": "confirmed",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=2)).isoformat(),
+            "updated_at": (datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "user_id": dummy_users[3]["id"],
+            "items": [
+                {"product_id": products[3]["id"], "product_name": products[3]["name"], "variant_id": products[3]["variants"][0]["id"], "variant_name": products[3]["variants"][0]["name"], "weight": "1 KG", "price": 350, "quantity": 2},
+                {"product_id": products[4]["id"], "product_name": products[4]["name"], "variant_id": products[4]["variants"][0]["id"], "variant_name": products[4]["variants"][0]["name"], "weight": "500g", "price": 150, "quantity": 2}
+            ],
+            "address": {"name": "Sunita Devi", "phone": "9876543213", "email": "sunita.devi@gmail.com", "address": "12, Agri Colony", "city": "Jodhpur", "state": "Rajasthan", "pincode": "342001"},
+            "subtotal": 1000,
+            "discount": 0,
+            "shipping": 0,
+            "total": 1000,
+            "payment_status": "paid",
+            "payment_id": "pay_dummy_004",
+            "razorpay_order_id": "order_dummy_004",
+            "order_status": "pending",
+            "created_at": (datetime.now(timezone.utc) - timedelta(hours=12)).isoformat(),
+            "updated_at": (datetime.now(timezone.utc) - timedelta(hours=12)).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "user_id": dummy_users[4]["id"],
+            "items": [
+                {"product_id": products[0]["id"], "product_name": products[0]["name"], "variant_id": products[0]["variants"][1]["id"], "variant_name": products[0]["variants"][1]["name"], "weight": "2 KG", "price": 450, "quantity": 5}
+            ],
+            "address": {"name": "Ramesh Kumar", "phone": "9876543214", "email": "ramesh.kumar@gmail.com", "address": "56, Farm Road", "city": "Udaipur", "state": "Rajasthan", "pincode": "313001"},
+            "subtotal": 2250,
+            "discount": 200,
+            "shipping": 0,
+            "total": 2050,
+            "coupon_code": "WELCOME20",
+            "payment_status": "paid",
+            "payment_id": "pay_dummy_005",
+            "razorpay_order_id": "order_dummy_005",
+            "order_status": "delivered",
+            "created_at": (datetime.now(timezone.utc) - timedelta(days=15)).isoformat(),
+            "updated_at": (datetime.now(timezone.utc) - timedelta(days=12)).isoformat()
+        }
+    ]
+    await db.orders.insert_many(dummy_orders)
+    
     return {"message": "Data seeded successfully", "admin_email": "admin@ifsseeds.com", "admin_password": "admin123"}
 
 # Include router
