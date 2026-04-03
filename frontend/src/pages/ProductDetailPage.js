@@ -10,6 +10,7 @@ import Footer from "../components/landing/Footer";
 import CartSidebar from "../components/landing/CartSidebar";
 import { toast } from "sonner";
 import { toAssetUrl } from "@/lib/assets";
+import { getProductGuideByVariety } from "@/data/productGuides";
 
 export default function ProductDetailPage() {
   const { productId } = useParams();
@@ -49,6 +50,7 @@ export default function ProductDetailPage() {
   const discount = selectedVariant 
     ? Math.round((1 - selectedVariant.price / selectedVariant.original_price) * 100)
     : 0;
+  const productGuide = getProductGuideByVariety(product?.variety);
 
   if (loading) {
     return (
@@ -128,6 +130,25 @@ export default function ProductDetailPage() {
                   ))}
                 </div>
               </div>
+
+              {productGuide && (
+                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                    Farmer Guide
+                  </p>
+                  <h3 className="mt-2 text-lg font-semibold text-stone-900" style={{ fontFamily: 'Outfit, sans-serif' }}>
+                    Package of Practices available
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-stone-600">
+                    View the complete agronomy guide with QR code, English and Hindi recommendations, and sharing options for farmers.
+                  </p>
+                  <Link to={`/guides/${productGuide.slug}`} className="mt-4 inline-flex">
+                    <Button variant="outline" className="rounded-full border-emerald-300 text-emerald-700 hover:bg-emerald-100">
+                      Open Package of Practices
+                    </Button>
+                  </Link>
+                </div>
+              )}
 
               {/* Variants */}
               <div className="space-y-3">

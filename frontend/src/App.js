@@ -8,6 +8,8 @@ import { Toaster } from "@/components/ui/sonner";
 import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import ProductGuidesPage from "./pages/ProductGuidesPage";
+import ProductGuidePage from "./pages/ProductGuidePage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import LoginPage from "./pages/LoginPage";
@@ -24,8 +26,8 @@ import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminInventory from "./pages/admin/AdminInventory";
 import AdminSettings from "./pages/admin/AdminSettings";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-export const API = `${BACKEND_URL}/api`;
+const BACKEND_URL = (process.env.REACT_APP_BACKEND_URL || "").replace(/\/+$/, "");
+export const API = BACKEND_URL ? `${BACKEND_URL}/api` : "/api";
 
 // Auth Context
 export const AuthContext = createContext(null);
@@ -195,6 +197,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<ShopPage />} />
             <Route path="/product/:productId" element={<ProductDetailPage />} />
+            <Route path="/guides" element={<ProductGuidesPage />} />
+            <Route path="/guides/:slug" element={<ProductGuidePage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={
               <ProtectedRoute>

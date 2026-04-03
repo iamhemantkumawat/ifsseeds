@@ -1638,12 +1638,11 @@ async def seed_initial_data(admin: dict = Depends(get_admin_user)):
             "name": "Cluster Bean (Guar) Seeds SR-23",
             "variety": "SR-23",
             "category": "Cash Crops",
-            "description": "Superior guar seeds with high gum content, perfect for industrial and food processing applications. Thrives in arid conditions.",
-            "image": "/uploads/products/cluster-bean-sr23.jpg",
-            "features": ["High gum content", "Heat tolerant", "Low water requirement", "Multiple harvests possible", "Industrial grade quality"],
+            "description": "High-yield cluster bean variety with approx. 33% gum content, drought tolerance, and good disease tolerance. Well suited for semi-arid and arid farming regions.",
+            "image": "/uploads/products/sr-23.jpeg",
+            "features": ["High yield 20-25 q/ha", "Approx. 33% gum content", "Drought tolerant", "Single stem (Ekanali) type", "Disease tolerant"],
             "variants": [
-                {"id": str(uuid.uuid4()), "name": "2 KG Pack", "weight": "2 KG", "price": 400, "original_price": 499, "stock": 120, "sku": "SR23-2KG"},
-                {"id": str(uuid.uuid4()), "name": "5 KG Pack", "weight": "5 KG", "price": 950, "original_price": 1199, "stock": 30, "sku": "SR23-5KG"}
+                {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 400, "original_price": 400, "stock": 100, "sku": "SR23-1KG"}
             ],
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -1676,6 +1675,36 @@ async def seed_initial_data(admin: dict = Depends(get_admin_user)):
             "variants": [
                 {"id": str(uuid.uuid4()), "name": "500g Pack", "weight": "500g", "price": 150, "original_price": 249, "stock": 150, "sku": "SR30-500G"},
                 {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 280, "original_price": 449, "stock": 75, "sku": "SR30-1KG"}
+            ],
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Cluster Bean (Guar) Seeds SR-51",
+            "variety": "SR-51",
+            "category": "Cash Crops",
+            "description": "High-yield spreading guar variety with drought tolerance, high gum content, and disease resistance for arid and semi-arid growing conditions.",
+            "image": "/uploads/products/sr-51.jpeg",
+            "features": ["High yield 20-25 q/ha", "Spreading / branching habit", "Drought tolerant", "High gum content", "Disease resistant"],
+            "variants": [
+                {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 500, "original_price": 500, "stock": 100, "sku": "SR51-1KG"}
+            ],
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Mung Bean (Green Gram) Seeds SR-31",
+            "variety": "SR-31",
+            "category": "Legumes",
+            "description": "YMV-resistant mung bean variety with multiple flowering flushes, shiny grains, and reliable yield in arid and semi-arid regions during Kharif and summer.",
+            "image": "/uploads/products/sr-31.jpeg",
+            "features": ["Approx. 15 q/ha yield", "YMV resistant", "Multiple flowering habit", "Shiny attractive grains", "Good market price"],
+            "variants": [
+                {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 500, "original_price": 500, "stock": 100, "sku": "SR31-1KG"}
             ],
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -1769,12 +1798,11 @@ async def seed_public_data():
             "name": "Cluster Bean (Guar) Seeds SR-23",
             "variety": "SR-23",
             "category": "Cash Crops",
-            "description": "Superior guar seeds with high gum content, perfect for industrial and food processing applications. Thrives in arid conditions.",
-            "image": "/uploads/products/cluster-bean-sr23.jpg",
-            "features": ["High gum content", "Heat tolerant", "Low water requirement", "Multiple harvests possible", "Industrial grade quality"],
+            "description": "High-yield cluster bean variety with approx. 33% gum content, drought tolerance, and good disease tolerance. Well suited for semi-arid and arid farming regions.",
+            "image": "/uploads/products/sr-23.jpeg",
+            "features": ["High yield 20-25 q/ha", "Approx. 33% gum content", "Drought tolerant", "Single stem (Ekanali) type", "Disease tolerant"],
             "variants": [
-                {"id": str(uuid.uuid4()), "name": "2 KG Pack", "weight": "2 KG", "price": 400, "original_price": 499, "stock": 120, "sku": "SR23-2KG"},
-                {"id": str(uuid.uuid4()), "name": "5 KG Pack", "weight": "5 KG", "price": 950, "original_price": 1199, "stock": 30, "sku": "SR23-5KG"}
+                {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 400, "original_price": 400, "stock": 100, "sku": "SR23-1KG"}
             ],
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -1807,6 +1835,36 @@ async def seed_public_data():
             "variants": [
                 {"id": str(uuid.uuid4()), "name": "500g Pack", "weight": "500g", "price": 150, "original_price": 249, "stock": 150, "sku": "SR30-500G"},
                 {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 280, "original_price": 449, "stock": 75, "sku": "SR30-1KG"}
+            ],
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Cluster Bean (Guar) Seeds SR-51",
+            "variety": "SR-51",
+            "category": "Cash Crops",
+            "description": "High-yield spreading guar variety with drought tolerance, high gum content, and disease resistance for arid and semi-arid growing conditions.",
+            "image": "/uploads/products/sr-51.jpeg",
+            "features": ["High yield 20-25 q/ha", "Spreading / branching habit", "Drought tolerant", "High gum content", "Disease resistant"],
+            "variants": [
+                {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 500, "original_price": 500, "stock": 100, "sku": "SR51-1KG"}
+            ],
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": str(uuid.uuid4()),
+            "name": "Mung Bean (Green Gram) Seeds SR-31",
+            "variety": "SR-31",
+            "category": "Legumes",
+            "description": "YMV-resistant mung bean variety with multiple flowering flushes, shiny grains, and reliable yield in arid and semi-arid regions during Kharif and summer.",
+            "image": "/uploads/products/sr-31.jpeg",
+            "features": ["Approx. 15 q/ha yield", "YMV resistant", "Multiple flowering habit", "Shiny attractive grains", "Good market price"],
+            "variants": [
+                {"id": str(uuid.uuid4()), "name": "1 KG Pack", "weight": "1 KG", "price": 500, "original_price": 500, "stock": 100, "sku": "SR31-1KG"}
             ],
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -1928,7 +1986,7 @@ async def seed_public_data():
             "id": str(uuid.uuid4()),
             "user_id": dummy_users[2]["id"],
             "items": [
-                {"product_id": products[2]["id"], "product_name": products[2]["name"], "variant_id": products[2]["variants"][0]["id"], "variant_name": products[2]["variants"][0]["name"], "weight": "2 KG", "price": 400, "quantity": 3}
+                {"product_id": products[2]["id"], "product_name": products[2]["name"], "variant_id": products[2]["variants"][0]["id"], "variant_name": products[2]["variants"][0]["name"], "weight": "1 KG", "price": 400, "quantity": 3}
             ],
             "address": {"name": "Amit Verma", "phone": "9876543212", "email": "amit.verma@gmail.com", "address": "78, Kisan Nagar", "city": "Sikar", "state": "Rajasthan", "pincode": "332001"},
             "subtotal": 1200,
